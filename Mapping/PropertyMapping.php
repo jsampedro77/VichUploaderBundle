@@ -23,6 +23,16 @@ class PropertyMapping
     protected $fileNameProperty;
 
     /**
+     * @var \ReflectionProperty $filePathProperty
+     */
+    protected $filePathProperty;
+
+    /**
+     * @var \ReflectionProperty $fileBase64Property
+     */
+    protected $fileBase64Property;
+
+    /**
      * @var NamerInterface $namer
      */
     protected $namer;
@@ -86,6 +96,52 @@ class PropertyMapping
     {
         $this->fileNameProperty = $fileNameProperty;
         $this->fileNameProperty->setAccessible(true);
+    }
+
+    /**
+     * Gets the reflection property that represents the property
+     * which holds the file path for the mapping.
+     *
+     * @return \ReflectionProperty The reflection property.
+     */
+    public function getFilePathProperty()
+    {
+        return $this->filePathProperty;
+    }
+
+    /**
+     * Sets the reflection property that represents the property
+     * which holds the file name for the mapping.
+     *
+     * @param \ReflectionProperty $fileNameProperty The reflection property.
+     */
+    public function setFilePathProperty(\ReflectionProperty $filePathProperty)
+    {
+        $this->filePathProperty = $filePathProperty;
+        $this->filePathProperty->setAccessible(true);
+    }
+
+    /**
+     * Gets the reflection property that represents the property
+     * which holds the file Base64 for the mapping.
+     *
+     * @return \ReflectionProperty The reflection property.
+     */
+    public function getFileBase64Property()
+    {
+        return $this->fileBase64Property;
+    }
+
+    /**
+     * Sets the reflection property that represents the property
+     * which holds the file Base64 for the mapping.
+     *
+     * @param \ReflectionProperty $fileNameProperty The reflection property.
+     */
+    public function setFileBase64Property(\ReflectionProperty $fileBase64Property)
+    {
+        $this->fileBase64Property = $fileBase64Property;
+        $this->fileBase64Property->setAccessible(true);
     }
 
     /**

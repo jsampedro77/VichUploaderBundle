@@ -27,6 +27,16 @@ class UploadableField
     protected $fileNameProperty;
 
     /**
+     * @var string $filePathProperty
+     */
+    protected $filePathProperty;
+
+    /**
+     * @var string $fileBase64Property
+     */
+    protected $fileBase64Property;
+
+    /**
      * Constructs a new instance of UploadableField.
      *
      * @param array $options The options.
@@ -44,6 +54,14 @@ class UploadableField
         } else {
             throw new \InvalidArgumentException('The "fileNameProperty" attribute of UploadableField is required.');
         }
+
+        if (isset($options['filePathProperty'])) {
+            $this->filePathProperty = $options['filePathProperty'];
+        } 
+
+        if (isset($options['fileBase64Property'])) {
+            $this->fileBase64Property = $options['fileBase64Property'];
+        } 
     }
 
     /**
@@ -104,5 +122,45 @@ class UploadableField
     public function setFileNameProperty($fileNameProperty)
     {
         $this->fileNameProperty = $fileNameProperty;
+    }
+
+    /**
+     * Gets the file path property.
+     *
+     * @return string The path name property.
+     */
+    public function getFilePathProperty()
+    {
+        return $this->filePathProperty;
+    }
+
+    /**
+     * Sets the file path property.
+     *
+     * @param $fileNameProperty The file path property.
+     */
+    public function setFilePathProperty($filePathProperty)
+    {
+        $this->filePathProperty = $filePathProperty;
+    }
+
+    /**
+     * Gets the file base64 property.
+     *
+     * @return string The base64 name property.
+     */
+    public function getFileBase64Property()
+    {
+        return $this->fileBase64Property;
+    }
+
+    /**
+     * Sets the file base64 property.
+     *
+     * @param $fileNameProperty The file base64 property.
+     */
+    public function setFileBase64Property($fileBase64Property)
+    {
+        $this->fileBase64Property = $fileBase64Property;
     }
 }
