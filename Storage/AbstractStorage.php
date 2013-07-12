@@ -1,4 +1,5 @@
 <?php
+
 namespace Vich\UploaderBundle\Storage;
 
 use Vich\UploaderBundle\Storage\StorageInterface;
@@ -65,11 +66,25 @@ abstract class AbstractStorage implements StorageInterface
                 $name = $file->getClientOriginalName();
             }
 
+            //if file < 32KB store it in base64
+            if ($file->getSize() < 32728) {
+                $type = $file->getMimeType();
+                $data = file_get_contents($file->getRealPath());
+                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                $mapping->getFileBase64Property()->setValue($obj, $base64);
+            }
+            
             $dir = $mapping->getUploadDir($obj, $mapping->getProperty()->getName());
 
             $this->doUpload($file, $dir, $name);
 
             $mapping->getFileNameProperty()->setValue($obj, $name);
+            //get web path from dir
+            // TODO: This assumes path contains ../ and "web" is the web root name.
+            $path = substr($dir, strpos($dir, "/../web") + 7);
+            $mapping->getFilePathProperty()->setValue($obj, $path);
+
+
         }
     }
 
@@ -122,13 +137,13 @@ abstract class AbstractStorage implements StorageInterface
         $mapping = $this->factory->fromField($obj, $field);
         if (null === $mapping) {
             throw new \InvalidArgumentException(sprintf(
-                'Unable to find uploadable field named: "%s"', $field
+                    'Unable to find uploadable field named: "%s"', $field
             ));
         }
         $name = $mapping->getFileNameProperty()->getValue($obj);
         if ($name === null) {
             throw new \InvalidArgumentException(sprintf(
-                'Unable to get filename property value: "%s"', $field
+                    'Unable to get filename property value: "%s"', $field
             ));
         }
 
@@ -145,14 +160,14 @@ abstract class AbstractStorage implements StorageInterface
         $mapping = $this->factory->fromField($obj, $field);
         if (null === $mapping) {
             throw new \InvalidArgumentException(sprintf(
-                'Unable to find uploadable field named: "%s"', $field
+                    'Unable to find uploadable field named: "%s"', $field
             ));
         }
 
         $name = $mapping->getFileNameProperty()->getValue($obj);
         if ($name === null) {
             throw new \InvalidArgumentException(sprintf(
-                'Unable to get filename property value: "%s"', $field
+                    'Unable to get filename property value: "%s"', $field
             ));
         }
 

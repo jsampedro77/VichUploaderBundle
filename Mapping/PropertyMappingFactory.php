@@ -103,7 +103,7 @@ class PropertyMappingFactory
     {
         if (null === $this->driver->readUploadable($class)) {
             throw new \InvalidArgumentException(
-                'The object is not uploadable.'
+            'The object is not uploadable.'
             );
         }
     }
@@ -122,7 +122,7 @@ class PropertyMappingFactory
 
         if (!array_key_exists($field->getMapping(), $this->mappings)) {
             throw new \InvalidArgumentException(sprintf(
-               'No mapping named "%s" configured.', $field->getMapping()
+                    'No mapping named "%s" configured.', $field->getMapping()
             ));
         }
 
@@ -131,6 +131,15 @@ class PropertyMappingFactory
         $mapping = new PropertyMapping();
         $mapping->setProperty($class->getProperty($field->getPropertyName()));
         $mapping->setFileNameProperty($class->getProperty($field->getFileNameProperty()));
+
+        if ($field->getFilePathProperty()) {
+            $mapping->setFilePathProperty($class->getProperty($field->getFilePathProperty()));
+        }
+        
+        if ($field->getFileBase64Property()) {
+            $mapping->setFileBase64Property($class->getProperty($field->getFileBase64Property()));
+        }
+
         $mapping->setMappingName($field->getMapping());
         $mapping->setMapping($config);
 
