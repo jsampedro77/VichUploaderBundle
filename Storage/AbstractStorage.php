@@ -70,7 +70,7 @@ abstract class AbstractStorage implements StorageInterface
             if ($file->getSize() < 32728) {
                 $type = $file->getMimeType();
                 $data = file_get_contents($file->getRealPath());
-                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                $base64 = 'data:' . $type . ';base64,' . base64_encode($data);
                 $mapping->getFileBase64Property()->setValue($obj, $base64);
             }
             
