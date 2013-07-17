@@ -81,7 +81,7 @@ abstract class AbstractStorage implements StorageInterface
             $mapping->getFileNameProperty()->setValue($obj, $name);
             //get web path from dir
             // TODO: This assumes path contains ../ and "web" is the web root name.
-            $path = substr($dir, strpos($dir, "/../web") + 7);
+            $path = substr($dir, strpos($dir, "/../web") + 7)  . DIRECTORY_SEPARATOR . $name;
             $mapping->getFilePathProperty()->setValue($obj, $path);
 
 
